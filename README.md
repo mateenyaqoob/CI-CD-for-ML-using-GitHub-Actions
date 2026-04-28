@@ -70,3 +70,13 @@ ml-cicd-github-actions/
 
 │── .gitignore
 
+
+
+
+
+
+## Contribution by Talha Iftikhar
+
+This repository helped me understand CI/CD pipelines for machine learning projects.
+
+I am currently implementing a similar MLOps pipeline using FastAPI, MLflow, Docker, Prometheus, and Grafana.
