@@ -17,3 +17,12 @@ pred = model.predict(X_test)
 acc = accuracy_score(y_test, pred)
 
 print(f"Accuracy: {acc}")
+
+# Adding a Quality gate
+THRESHOLD = 0.75
+
+if acc < THRESHOLD:
+    print(f" Model failed. Accuracy {acc:.2f} is below threshold {THRESHOLD}")
+    sys.exit(1)
+else:
+    print(f" Model passed. Accuracy {acc:.2f} is above threshold {THRESHOLD}")
