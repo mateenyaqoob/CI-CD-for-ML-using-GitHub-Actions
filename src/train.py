@@ -2,6 +2,8 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import joblib
+import os
+os.makedirs("models", exist_ok=True)
 
 df = pd.read_csv("data/processed.csv")
 
