@@ -1,5 +1,4 @@
 name: ML CI/CD Pipeline
-# CI fix test
 on:
   push:
     branches: [ main ]

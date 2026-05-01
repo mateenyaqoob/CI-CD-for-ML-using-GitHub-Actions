@@ -1,9 +1,9 @@
 import joblib
-import numpy as np
+import pandas as pd
 
-model = joblib.load("models/model.pkl")
+model, columns = joblib.load("models/model.pkl")
 
-sample = np.array([[5,6]])
+sample = pd.DataFrame([[5, 6]], columns=columns)
 
 pred = model.predict(sample)
 
