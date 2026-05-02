@@ -16,11 +16,10 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: 3.10
+        python-version: '3.10'
 
     - name: Install Dependencies
-      run: |
-        pip install -r requirements.txt
+      run: pip install -r requirements.txt
 
     - name: Run Preprocessing
       run: python src/preprocess.py
@@ -33,6 +32,9 @@ jobs:
 
     - name: Run Unit Tests
       run: pytest test_model.py
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
     - name: Build Docker Image
       run: docker build -t ml-api .
