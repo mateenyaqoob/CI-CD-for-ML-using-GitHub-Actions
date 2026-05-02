@@ -16,11 +16,16 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: 3.10
+        python-version: "3.10"
+        cache: 'pip'
 
     - name: Install Dependencies
       run: |
         pip install -r requirements.txt
+
+    - name: Create Directories
+      run: |
+        mkdir -p models data
 
     - name: Run Preprocessing
       run: python src/preprocess.py
@@ -32,10 +37,10 @@ jobs:
       run: python src/evaluate.py
 
     - name: Run Unit Tests
-      run: pytest test_model.py
+      run: pytest test_model.py -q
 
     - name: Build Docker Image
       run: docker build -t ml-api .
 
     - name: Simulated Deployment
-      run: echo "Deploying model..."
+      run: echo "✅ Deployment simulation successful"
