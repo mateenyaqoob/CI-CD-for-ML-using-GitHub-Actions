@@ -1,10 +1,12 @@
 import joblib
 import numpy as np
 
-model = joblib.load("models/model.pkl")
+def predict(feature1, feature2):
+    model = joblib.load("models/model.pkl")
+    sample = np.array([[feature1, feature2]])
+    pred = model.predict(sample)
+    return int(pred[0])
 
-sample = np.array([[5,6]])
-
-pred = model.predict(sample)
-
-print("Prediction:", pred[0])
+if __name__ == "__main__":
+    result = predict(5, 6)
+    print("Prediction:", result)
