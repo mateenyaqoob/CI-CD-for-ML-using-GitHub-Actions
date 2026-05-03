@@ -23,6 +23,10 @@ python app.py
 
 Push code to main branch → pipeline auto runs.
 
+## Submitting a pull request (assignment)
+
+Fork [mateenyaqoob/CI-CD-for-ML-using-GitHub-Actions](https://github.com/mateenyaqoob/CI-CD-for-ML-using-GitHub-Actions) on GitHub, push a branch with your fixes to your fork, then open a pull request against the upstream `main` branch. On macOS, if `git` reports an Xcode license error, run `sudo xcodebuild -license` once to accept the license, or use [GitHub Desktop](https://desktop.github.com/) to clone your fork and push without the command-line tools conflict.
+
 ## Structure
 ml-cicd-github-actions/
 
