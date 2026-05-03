@@ -70,3 +70,7 @@ ml-cicd-github-actions/
 
 │── .gitignore
 
+# Issue-Resolve-CI-CD-for-ML-using-GitHub-Actions
+here list of resolved issues and how to fix them:
+
+1.  
