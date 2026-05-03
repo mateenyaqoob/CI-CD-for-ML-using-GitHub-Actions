@@ -1,19 +1,36 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from pathlib import Path
+
 import joblib
+import pandas as pd
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
 
-df = pd.read_csv("data/processed.csv")
 
-X = df[['feature1', 'feature2']]
-y = df['target']
+DATA_PATH = Path("data/processed.csv")
+MODEL_PATH = Path("models/model.pkl")
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-model = joblib.load("models/model.pkl")
+def main():
+    df = pd.read_csv(DATA_PATH)
 
-pred = model.predict(X_test)
+    X = df[["feature1", "feature2"]]
+    y = df["target"]
 
-acc = accuracy_score(y_test, pred)
+    _, X_test, _, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        random_state=42,
+        stratify=y if y.nunique() > 1 else None,
+    )
 
-print(f"Accuracy: {acc}")
+    model = joblib.load(MODEL_PATH)
+
+    pred = model.predict(X_test)
+    acc = accuracy_score(y_test, pred)
+
+    print(f"Accuracy: {acc}")
+
+
+if __name__ == "__main__":
+    main()

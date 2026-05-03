@@ -1,10 +1,18 @@
+from pathlib import Path
+
 import joblib
-import numpy as np
+import pandas as pd
 
-model = joblib.load("models/model.pkl")
 
-sample = np.array([[5,6]])
+MODEL_PATH = Path("models/model.pkl")
 
-pred = model.predict(sample)
 
-print("Prediction:", pred[0])
+def main():
+    model = joblib.load(MODEL_PATH)
+    sample = pd.DataFrame([[5, 6]], columns=["feature1", "feature2"])
+    pred = model.predict(sample)
+    print("Prediction:", pred[0])
+
+
+if __name__ == "__main__":
+    main()
