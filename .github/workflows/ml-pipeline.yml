@@ -4,38 +4,55 @@ on:
   push:
     branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
-  train-test-deploy:
+  ml-pipeline:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: 3.10
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-    - name: Install Dependencies
-      run: |
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Run Preprocessing
-      run: python src/preprocess.py
+      - name: Create models directory
+        run: mkdir -p models
 
-    - name: Train Model
-      run: python src/train.py
+      - name: Preprocess data
+        run: python src/preprocess.py
 
-    - name: Evaluate Model
-      run: python src/evaluate.py
+      - name: Train model
+        run: python src/train.py
 
-    - name: Run Unit Tests
-      run: pytest test_model.py
+      - name: Evaluate model
+        run: python src/evaluate.py
 
-    - name: Build Docker Image
-      run: docker build -t ml-api .
+      - name: Run tests
+        run: python -m pytest test_model.py -v
 
-    - name: Simulated Deployment
-      run: echo "Deploying model..."
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: trained-model
+          path: models/
+          if-no-files-found: warn
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: ml-pipeline
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t ml-app:latest .
