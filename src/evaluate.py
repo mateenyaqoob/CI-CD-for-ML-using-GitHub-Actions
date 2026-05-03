@@ -17,3 +17,7 @@ pred = model.predict(X_test)
 acc = accuracy_score(y_test, pred)
 
 print(f"Accuracy: {acc}")
+
+ACCURACY_THRESHOLD = 0.7
+if acc < ACCURACY_THRESHOLD:
+    raise ValueError(f"Model accuracy {acc:.2f} below threshold {ACCURACY_THRESHOLD}")
