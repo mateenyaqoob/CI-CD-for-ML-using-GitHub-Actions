@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import joblib
-import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -13,7 +13,8 @@ def home():
 @app.route("/predict", methods=["POST"])
 def predict():
     data = request.json
-    values = np.array([data["features"]])
+    # Create DataFrame with proper feature names to avoid sklearn warning
+    values = pd.DataFrame([data["features"]], columns=['feature1', 'feature2'])
     pred = model.predict(values)
     return jsonify({"prediction": int(pred[0])})
 
