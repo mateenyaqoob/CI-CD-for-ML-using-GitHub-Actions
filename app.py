@@ -1,10 +1,16 @@
 from flask import Flask, request, jsonify
+from pathlib import Path
 import joblib
-import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 
-model = joblib.load("models/model.pkl")
+MODEL_PATH = Path("models/model.pkl")
+
+if MODEL_PATH.exists():
+    model = joblib.load(MODEL_PATH)
+else:
+    model = None
 
 @app.route("/")
 def home():
@@ -12,8 +18,14 @@ def home():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    if model is None:
+        return jsonify({"error": "Model is not trained yet"}), 503
+
     data = request.json
-    values = np.array([data["features"]])
+    if not data or "features" not in data:
+        return jsonify({"error": "Request must include a 'features' array"}), 400
+
+    values = pd.DataFrame([data["features"]], columns=["feature1", "feature2"])
     pred = model.predict(values)
     return jsonify({"prediction": int(pred[0])})
 
