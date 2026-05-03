@@ -1,9 +1,10 @@
 import joblib
-import numpy as np
+import pandas as pd
 
 model = joblib.load("models/model.pkl")
 
-sample = np.array([[5,6]])
+# Create DataFrame with proper feature names to avoid sklearn warning
+sample = pd.DataFrame([[5, 6]], columns=['feature1', 'feature2'])
 
 pred = model.predict(sample)
 
