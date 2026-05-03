@@ -2,8 +2,16 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 import joblib
+import os
 
-df = pd.read_csv("data/processed.csv")
+
+os.makedirs("models", exist_ok=True)
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+data_path = os.path.join(BASE_DIR, "data", "sample.csv")
+
+df = pd.read_csv(data_path)
 
 X = df[['feature1', 'feature2']]
 y = df['target']
