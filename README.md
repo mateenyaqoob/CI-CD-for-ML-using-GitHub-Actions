@@ -8,6 +8,8 @@ This repository demonstrates:
 ✅ Automated testing  
 ✅ Docker image build  
 ✅ CI/CD pipeline using GitHub Actions
+✅ Model versioning
+✅ MLflow experiment tracking
 
 ## Run Locally
 
@@ -18,6 +20,22 @@ python src/train.py
 python src/evaluate.py
 
 python app.py
+
+## Model Versioning
+
+Training always saves the latest model to models/model.pkl and a versioned
+artifact to models/model_<version>.pkl. Set MODEL_VERSION to control the
+version tag; CI uses the workflow run number and writes the current version
+to models/model_version.txt.
+
+## MLflow Tracking
+
+If mlflow is installed, training logs parameters, metrics, and the model to a
+local MLflow store (mlruns/). You can override these values:
+
+- MLFLOW_TRACKING_URI (default: file:./mlruns)
+- MLFLOW_EXPERIMENT_NAME (default: ml-cicd)
+- MLFLOW_REGISTERED_MODEL_NAME (optional)
 
 ## GitHub Actions
 
