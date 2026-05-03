@@ -12,8 +12,9 @@ def home():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    import pandas as pd
     data = request.json
-    values = np.array([data["features"]])
+    values = pd.DataFrame([data["features"]], columns=['feature1', 'feature2'])
     pred = model.predict(values)
     return jsonify({"prediction": int(pred[0])})
 
