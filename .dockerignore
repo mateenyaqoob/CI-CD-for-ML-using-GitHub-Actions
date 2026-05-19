@@ -1,5 +1,5 @@
+.git
+.gitignore
 mlruns/
 __pycache__/
 .pytest_cache/
-data/processed.csv
-*.pkl
