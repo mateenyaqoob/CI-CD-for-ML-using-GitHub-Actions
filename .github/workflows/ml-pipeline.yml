@@ -1,9 +1,16 @@
+- name: Setup Python
+  uses: actions/setup-python@v5
+  with:
+    python-version: '3.10'  # Ensure it's quoted and correct
 name: ML CI/CD Pipeline
 
 on:
   push:
     branches: [ main ]
   pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   train-test-deploy:
@@ -16,7 +23,7 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.10"
+        python-version: '3.10'
 
     - name: Install Dependencies
       run: |
