@@ -18,6 +18,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = RandomForestClassifier(random_state=42)
 model.fit(X_train, y_train)
 
+import os
+os.makedirs('models', exist_ok=True)
 os.makedirs("models", exist_ok=True)
 joblib.dump(model, "models/model.pkl")
 
