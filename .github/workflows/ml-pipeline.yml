@@ -1,3 +1,7 @@
+- name: Setup Python
+  uses: actions/setup-python@v5
+  with:
+    python-version: '3.10'  # Ensure it's quoted and correct
 name: ML CI/CD Pipeline
 
 on:
@@ -5,25 +9,33 @@ on:
     branches: [ main ]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   train-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@4.2.2
 
     - name: Setup Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v5.6.0
       with:
-        python-version: 3.10
+        python-version: '3.10'
 
     - name: Install Dependencies
-      run: |
-        pip install -r requirements.txt
+      run: pip install -r requirements.txt
+
+    - name: Create Models Directory
+      run: mkdir -p models
 
     - name: Run Preprocessing
       run: python src/preprocess.py
+
+    - name: Create models directory
+      run: mkdir -p models
 
     - name: Train Model
       run: python src/train.py
@@ -32,11 +44,10 @@ jobs:
       run: python src/evaluate.py
 
     - name: Run Unit Tests
-      run: pytest test_model.py
+      run: pytest test_model.py -v
 
     - name: Build Docker Image
       run: docker build -t ml-api .
 
     - name: Simulated Deployment
       run: echo "Deploying model..."
-
